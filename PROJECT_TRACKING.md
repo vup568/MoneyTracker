@@ -19,9 +19,8 @@ Current Focus:
 
 Current Task:
 
-* Test Category APIs using Swagger
-* Test Transaction APIs using Swagger
-* Test APIs using Postman
+* Prepare for MVC Frontend implementation
+* Understand HttpClient and API integration
 
 Current Learning Progress:
 
@@ -31,10 +30,12 @@ Completed Chapters:
 
 * Chapter 1 - RESTful Service
 * Chapter 2 - Models and EF Core
+* Chapter 3 - Content Negotiation & OData
+* Chapter 4 - DTO & AutoMapper
 
 Current Chapter:
 
-* Chapter 2.5 - CRUD Testing
+* Chapter 5 - MVC Client Integration
 
 Next Chapter:
 

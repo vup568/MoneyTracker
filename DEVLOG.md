@@ -118,3 +118,50 @@
 * Postman Testing
 * Start Stage 2 - Content Negotiation / DTO
 
+---
+
+## 2026-06-23
+
+### Decisions
+
+* Temporarily pause Backend Phase 5 (Repository Pattern) to build an MVC Frontend project to prepare for an upcoming test.
+* Strict Content Negotiation implemented.
+* Used DTOs for all endpoints to prevent over-posting and circular references.
+* Used AutoMapper to eliminate manual property mapping.
+
+---
+
+### Completed
+
+#### Advanced Backend
+
+* Added XML Formatter and Strict Content Negotiation (`ReturnHttpNotAcceptable = true`)
+* Configured OData (Entity Data Model & Middleware)
+* Enabled OData querying on `GET` endpoints (`[EnableQuery]` & returning `IQueryable`)
+* Created `CategoryDto`, `CategoryCreateDto` with `DataAnnotations` validation
+* Created `TransactionDto`, `TransactionCreateDto`
+* Configured `AutoMapper` with `MappingProfile` for entity-DTO mappings
+
+#### Learning
+
+* **Content Negotiation**: `Accept` (Client wants) vs `Content-Type` (Client sends).
+* **OData**: Let clients dynamically query data (filter, sort, limit) directly from the URL.
+* **DTO**: Plain objects used as a mask to protect domain models and shape API responses.
+* **Validation**: `[Required]`, `[MaxLength]`, `[Range]` at the API boundary, automatically returning 400 Bad Request.
+* **AutoMapper**: Lambda expressions (Anonymous Functions `=>`) to map properties automatically.
+
+---
+
+### Current Task
+
+* Create a separate ASP.NET Core MVC Project.
+* Use `HttpClient` to call the Backend API.
+
+---
+
+### Next Session
+
+* Setup MVC Project.
+* Implement `HttpClient` Service.
+* Build Category/Transaction List View in MVC.
+

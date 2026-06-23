@@ -3,7 +3,8 @@ using FinanceTracker.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.AspNetCore.OData.Query;
+using FinanceTracker.DTOs;
 
 namespace FinanceTracker.Controllers
 {
@@ -22,11 +23,20 @@ namespace FinanceTracker.Controllers
         //EF core create FinanceDbContext and inject, you do not have new FinanceDbContext() anymore
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        [EnableQuery]
+        public IActionResult GetAll()
         {
-            var categories = await _context.Categories.ToListAsync();
+       //using Odata     //var categories = _context.Categories.Include(c => c.Transactions).AsQueryable();
             //when use async + await: API request Server -> return solve other request -> when server response ->API will take that data
             ////-> API will not wait Server return data 
+
+        //using DTOs && Odata
+        var categories = _context.Categories.Select(c => new CategoryDto{
+            Id = c.id,
+            CategoryName = c.CategoryName,
+            CategoryDescription = c.Description
+        }).AsQueryable();
+    
             return Ok(categories);
 
             //why return IActionResult ? 
@@ -35,8 +45,14 @@ namespace FinanceTracker.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateCategory(Category category)
+        public async Task<IActionResult> CreateCategory(CategoryCreateDto dto)
         {
+
+            var category = new Category
+            {
+                CategoryName = dto.CategoryName,
+                Description = dto.CategoryDescription 
+            };
             _context.Categories.Add(category);
 
             await _context.SaveChangesAsync();
@@ -69,8 +85,14 @@ namespace FinanceTracker.Controllers
             if(category == null){
                 return NotFound();
             }
+             var categoryDto = new CategoryDto
+             {
+                 Id = category.Id,
+                 CategoryName = category.CategoryName,
+                CategoryDescription = category.Description
+             };
 
-            return Ok(category);
+            return Ok(categoryDto);
 
         }
 
@@ -81,12 +103,38 @@ namespace FinanceTracker.Controllers
             if(category == null){
                 return NotFound();
             }
+           
 
             _context.Categories.Remove(category);
 
             await _context.SaveChangesAsync();
 
             return NoContent();
+
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateCategory(int id, Category newCategory)
+        {
+            if (id != newCategory.Id)
+            {
+                return BadRequest("URL id does not match body id");
+            }
+            var existCategory = await _context.Categories.FindAsync(id);
+            if (existCategory == null)
+            {
+                return NotFound();
+            }
+           
+
+            existCategory.Description = newCategory.Description;
+            existCategory.CategoryName = newCategory.CategoryName;
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+
+
+
 
         }
     }

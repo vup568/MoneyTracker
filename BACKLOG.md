@@ -2,8 +2,7 @@
 
 ## In Progress
 
-* Swagger Testing
-* Postman Testing
+* ASP.NET Core MVC Client Project
 
 ---
 
@@ -13,20 +12,6 @@
 
 * Swagger Testing
 * Postman Testing
-
-### Phase 2
-
-* XML Formatter
-* Content Negotiation
-
-### Phase 3
-
-* OData
-
-### Phase 4
-
-* DTO
-* Validation
 
 ### Phase 5
 
@@ -74,3 +59,6 @@
 * Initial Migration
 * Category CRUD (4 APIs)
 * Transaction CRUD (5 APIs)
+* XML Formatter & Content Negotiation
+* OData
+* DTO & Validation (AutoMapper)
