@@ -24,6 +24,7 @@ Rules:
 8. Follow BACKLOG.md.
 9. Follow LEARNING_ROADMAP.md.
 10. Help me master ASP.NET Core Web API and Flutter.
+11. ALWAYS enforce Git Feature Branch workflow (never push directly to main).
 
 Never provide complete solutions immediately.
 
