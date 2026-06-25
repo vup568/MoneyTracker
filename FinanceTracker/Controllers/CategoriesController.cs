@@ -32,7 +32,7 @@ namespace FinanceTracker.Controllers
 
         //using DTOs && Odata
         var categories = _context.Categories.Select(c => new CategoryDto{
-            Id = c.id,
+            Id = c.Id,
             CategoryName = c.CategoryName,
             CategoryDescription = c.Description
         }).AsQueryable();
@@ -57,7 +57,14 @@ namespace FinanceTracker.Controllers
 
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetCategoryById), new { id = category.Id }, category);
+            var categoryDto = new CategoryDto
+            {
+                Id = category.Id,
+                CategoryName = category.CategoryName,
+                CategoryDescription = category.Description
+            };
+
+            return CreatedAtAction(nameof(GetCategoryById), new { id = category.Id }, categoryDto);
             //CreatedAtAction(actionName, routeValue, value)
             //Trả về HTTP 201 Created
 
@@ -89,7 +96,7 @@ namespace FinanceTracker.Controllers
              {
                  Id = category.Id,
                  CategoryName = category.CategoryName,
-                CategoryDescription = category.Description
+                 CategoryDescription = category.Description
              };
 
             return Ok(categoryDto);
@@ -114,7 +121,7 @@ namespace FinanceTracker.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateCategory(int id, Category newCategory)
+        public async Task<IActionResult> UpdateCategory(int id, CategoryDto newCategory)
         {
             if (id != newCategory.Id)
             {
@@ -127,7 +134,7 @@ namespace FinanceTracker.Controllers
             }
            
 
-            existCategory.Description = newCategory.Description;
+            existCategory.Description = newCategory.CategoryDescription;
             existCategory.CategoryName = newCategory.CategoryName;
             await _context.SaveChangesAsync();
 

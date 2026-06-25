@@ -20,8 +20,15 @@ namespace FinanceTracker.Mappings
             CreateMap<CategoryCreateDto, Category>()
                     .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.CategoryDescription));
             
-            CreateMap<Transaction, TransactionDto>();
             CreateMap<TransactionCreateDto, Transaction>();
+
+            CreateMap<Transaction, TransactionDto>()
+                .ForMember(dest => dest.TransactionName, opt => opt.MapFrom(src => src.Title))
+                .ForMember(dest => dest.TransactionType, opt => opt.MapFrom(src => src.Type.ToString()))
+                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.CategoryName));
+
+
+                 
 
         }
     }

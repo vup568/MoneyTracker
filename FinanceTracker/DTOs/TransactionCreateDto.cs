@@ -5,6 +5,10 @@ namespace FinanceTracker.DTOs
 {
     public class TransactionCreateDto
     {
+        [Required(ErrorMessage = "Transaction Title is required.")]
+        [MaxLength(200, ErrorMessage = "Title cannot exceed 200 characters.")]
+        public string Title { get; set; }
+
         [Required(ErrorMessage = "Amount is required.")]
         [Range(0.01, double.MaxValue, ErrorMessage = "Amount must be greater than zero.")]
         public decimal Amount { get; set; }

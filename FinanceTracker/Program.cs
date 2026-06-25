@@ -1,9 +1,10 @@
-﻿using FinanceTracker.Data;
+using FinanceTracker.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.OData;
 using Microsoft.OData.Edm;
 using Microsoft.OData.ModelBuilder;
 using FinanceTracker.Models;
+using AutoMapper;
 
 
 namespace FinanceTracker
@@ -29,9 +30,21 @@ namespace FinanceTracker
                 .AddOData(options => options.Select().Filter().OrderBy().Expand().Count().SetMaxTop(100)
                 .AddRouteComponents("odata", GetEdmModel())); //setup to use odata and odata's method, setup separate url for odata
 
+            builder.Services.AddAutoMapper(cfg => cfg.AddProfile<FinanceTracker.Mappings.MappingProfile>());
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            //Configure CORS
+            builder.Services.AddCors(options => 
+            {
+                options.AddPolicy("AllowMvcClient", policy => 
+                {
+                    policy.WithOrigins("http://localhost:5231", "https://localhost:7227")
+                            .WithMethods("GET", "POST", "PUT", "DELETE")
+                            .AllowAnyHeader();
+                });
+            });
 
             var app = builder.Build();
 
@@ -43,6 +56,10 @@ namespace FinanceTracker
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors("AllowMvcClient");
+
+
 
             app.UseAuthorization();
 

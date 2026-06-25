@@ -8,23 +8,23 @@ Current Version: v0.3
 
 Current Stage:
 
-✅ Stage 1 - Backend Foundation
+🟡 Stage 2 - MVC Client Integration (Hybrid Client)
 
 Current Focus:
 
-* ASP.NET Core Web API
-* Entity Framework Core
-* SQL Server
-* RESTful API
+* ASP.NET Core MVC Client (consuming RESTful API)
+* Hybrid Client Architecture (Razor loading + Javascript AJAX modifications)
+* Handling CORS, API redirect blocks, and state synchronization
 
 Current Task:
 
-* Prepare for MVC Frontend implementation
-* Understand HttpClient and API integration
+* [x] Integrate Category CRUD with AJAX (List, Add, Delete, Edit)
+* [x] Integrate Transaction CRUD with AJAX (List, Add, Delete, Edit) - In Progress
+* [ ] Add Net Balance and summary cards to Transactions View - In Progress
 
 Current Learning Progress:
 
-### Web API
+### Web API & Client
 
 Completed Chapters:
 
@@ -32,10 +32,11 @@ Completed Chapters:
 * Chapter 2 - Models and EF Core
 * Chapter 3 - Content Negotiation & OData
 * Chapter 4 - DTO & AutoMapper
+* Chapter 5 - MVC Client Integration (Categories CRUD)
 
 Current Chapter:
 
-* Chapter 5 - MVC Client Integration
+* Chapter 6 - Hybrid Client & AJAX State Updates (Transactions & Balance)
 
 Next Chapter:
 

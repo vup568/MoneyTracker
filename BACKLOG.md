@@ -2,7 +2,7 @@
 
 ## In Progress
 
-* ASP.NET Core MVC Client Project
+* ASP.NET Core MVC Client Project (Transactions Module Integration)
 
 ---
 
@@ -27,7 +27,7 @@
 
 ### Phase 8
 
-* JavaScript Client
+* JavaScript Client (Transactions Module JS Integration)
 
 ### Phase 9
 
@@ -62,3 +62,4 @@
 * XML Formatter & Content Negotiation
 * OData
 * DTO & Validation (AutoMapper)
+* Categories Module (MvcClient with JavaScript AJAX Client)

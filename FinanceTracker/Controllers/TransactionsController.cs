@@ -3,6 +3,9 @@ using FinanceTracker.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.OData.Query;
+using FinanceTracker.DTOs;
+
 
 namespace FinanceTracker.Controllers
 {
@@ -28,23 +31,31 @@ namespace FinanceTracker.Controllers
             if(category == null){
                 return NotFound("CategoryId not found");
             }
-            var transactionDto = new TransactionDto
-            {
-                TransactionName = transaction.Title,
-                TransactionDate = transaction.TransactionDate.
-                Amount = transaction.Amount
-            }
-            _context.Transactions.Add(transactionDto);
+            _context.Transactions.Add(transaction);
 
             //create transaction
             await _context.SaveChangesAsync(); //await is waiting for until this complete
-            return CreatedAtAction(nameof(GetTransactionById), new {id = transaction.Id}, transaction);
 
+            var transactionDto = new TransactionDto
+            {
+                Id = transaction.Id,
+                TransactionName = transaction.Title ?? "",
+                Amount = transaction.Amount,
+                TransactionType = transaction.Type.ToString(),
+                TransactionDate = transaction.TransactionDate,
+                Note = transaction.Note,
+                CategoryId = transaction.CategoryId,
+                CategoryName = category.CategoryName
+            };
+
+            return CreatedAtAction(nameof(GetTransactionById), new {id = transaction.Id}, transactionDto);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTransactionById(int id){
-            var transaction = await _context.Transactions.FindAsync(id);
+            var transaction = await _context.Transactions
+                .Include(t => t.Category)
+                .FirstOrDefaultAsync(t => t.Id == id);
 
             if(transaction == null){
                 return NotFound();
@@ -52,26 +63,36 @@ namespace FinanceTracker.Controllers
 
             var transactionDto = new TransactionDto
             {
-                TransactionName = transaction.Title,
-                TransactionDate = transaction.TransactionDate.
-                Amount = transaction.Amount
+                Id = transaction.Id,
+                TransactionName = transaction.Title ?? "",
+                Amount = transaction.Amount,
+                TransactionType = transaction.Type.ToString(),
+                TransactionDate = transaction.TransactionDate,
+                Note = transaction.Note,
+                CategoryId = transaction.CategoryId,
+                CategoryName = transaction.Category?.CategoryName
             };
 
             return Ok(transactionDto);
         }
         
         [HttpGet]
-        [EnableQuery]
-        public IActionResult GetAllTransaction(){
-            //this not take all data, just take necessary data
-            var transactions = _context.Transactions.Include(t => t.Category).AsQueryable();
+        public async Task<IActionResult> GetAllTransaction(){
+            //truy vấn lấy toàn bộ danh sách của Transaction trước
+            var transactions = await _context.Transactions.Include(t => t.Category).ToListAsync();
 
-            var transactionList = new TransactionDto
+//lúc này mới thực hiện map từ object vào thằng list để hiển thị 
+            var transactionList = transactions.Select(t => new TransactionDto
             {
-                TransactionName = transaction.Title,
-                TransactionDate = transaction.TransactionDate.
-                Amount = transaction.Amount
-            }
+                Id = t.Id,
+                TransactionName = t.Title ?? "",
+                Amount = t.Amount,
+                TransactionType = t.Type.ToString(),
+                TransactionDate = t.TransactionDate,
+                Note = t.Note,
+                CategoryId = t.CategoryId,
+                CategoryName = t.Category != null ? t.Category.CategoryName : ""
+            });
             return Ok(transactionList);
         }
 
@@ -89,24 +110,22 @@ namespace FinanceTracker.Controllers
 
         [HttpPut("{id}")]
         //Task<T> = lời hứa sẽ trả về T sau khi async hoàn thành
-        public async Task<IActionResult> UpdateTransaction(int id, TransactionDto dto)
+        public async Task<IActionResult> UpdateTransaction(int id, TransactionCreateDto transaction)
         {
             // Bước 1: id trong URL phải khớp với id trong body
-            // Tránh trường hợp PUT /api/transactions/5 nhưng body có id = 10
-            // if (id != transaction.Id)
-            // {
-            //     return BadRequest("URL id does not match body id");
-            // }
+            //if (id != transaction.Id)
+            //{
+            //    return BadRequest("URL id does not match body id");
+            //}
 
             // Bước 2: Tìm transaction CŨ trong DB
-            // Đặt tên "existingTransaction" cho rõ nghĩa — đây là entity đang được EF Core TRACK
             var existingTransaction = await _context.Transactions.FindAsync(id);
             if (existingTransaction == null)
             {
                 return NotFound();
             }
 
-            // Bước 3: Validate CategoryId mới có tồn tại không (giống CreateTransaction)
+            // Bước 3: Validate CategoryId mới có tồn tại không
             var category = await _context.Categories.FindAsync(transaction.CategoryId);
             if (category == null)
             {
@@ -114,16 +133,14 @@ namespace FinanceTracker.Controllers
             }
 
             // Bước 4: Cập nhật TỪNG field của entity cũ
-            // Tại sao không gán existingTransaction = transaction?
-            // → Vì existingTransaction đang được EF Core TRACK, nếu gán lại thì mất tracking
-            existingTransaction.Title = dto.TransactionName;
-            existingTransaction.Amount = dto.Amount;
-            //existingTransaction.Type = dto.Type;
-            existingTransaction.TransactionDate = dto.TransactionDate;
-            // existingTransaction.Note = transaction.Note;
-            // existingTransaction.CategoryId = transaction.CategoryId;
+            existingTransaction.Title = transaction.Title;
+            existingTransaction.Amount = transaction.Amount;
+            existingTransaction.Type = transaction.Type;
+            existingTransaction.TransactionDate = transaction.TransactionDate;
+            existingTransaction.Note = transaction.Notes;
+            existingTransaction.CategoryId = transaction.CategoryId;
 
-            // Bước 5: SaveChanges — EF Core tự detect field nào thay đổi → chỉ UPDATE những field đó
+            // Bước 5: SaveChanges
             await _context.SaveChangesAsync();
 
             // 204 No Content — chuẩn RESTful cho PUT thành công
