@@ -149,7 +149,26 @@ Status:
 
 # Upcoming Stages
 
-## Stage 2 - Advanced Backend
+## Stage 2 - Multi-Wallet System (Hệ thống đa ví)
+
+* [ ] Design Wallet Entity (Id, Name, InitialBalance, CurrentBalance)
+* [ ] Create Migration and update Database
+* [ ] Update Transaction Entity: Add relationship (Transaction belongs to one Wallet)
+* [ ] Update DB context and configure cascade delete / restrict behavior
+* [ ] Write Wallet CRUD APIs
+* [ ] Implement Wallet auto-balance updates in Transactions Controller (Creating/Editing/Deleting transactions updates Wallet balance)
+* [ ] MvcClient Integration:
+  * [ ] Wallet Management View (AJAX list/create/edit/delete)
+  * [ ] Update Transactions View to support Wallet dropdown selection
+  * [ ] Implement Overall Portfolio Summary (Total Balance = Sum of all Wallet balances)
+
+Status:
+
+⚪ Not Started
+
+---
+
+## Stage 2A - Advanced Backend
 
 * Content Negotiation
 * XML Formatter

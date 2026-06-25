@@ -25,6 +25,14 @@
 
 * Dashboard APIs
 
+### Phase 7A
+
+* Multi-Wallet System (Wallet Entity, DB Migration, Wallet APIs, and MvcClient Integration)
+
+### Phase 7B
+
+* JWT Authentication & Security (Login, Logout, Role Assignment, Token Storage)
+
 ### Phase 8
 
 * JavaScript Client (Transactions Module JS Integration)
