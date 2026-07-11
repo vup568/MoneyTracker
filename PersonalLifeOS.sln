@@ -1,0 +1,54 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36717.8
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalLifeOS.Api", "src\PersonalLifeOS.Api\PersonalLifeOS.Api.csproj", "{D7CDB51E-C40D-4339-A8DE-6D421654A85A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalLifeOS.Web", "src\PersonalLifeOS.Web\PersonalLifeOS.Web.csproj", "{59AB1D89-9B8F-4D22-A257-EEBDD3C31941}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalLifeOS.Domain", "src\PersonalLifeOS.Domain\PersonalLifeOS.Domain.csproj", "{3668CB0C-07D7-4559-960A-B21F35EA91CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalLifeOS.Application", "src\PersonalLifeOS.Application\PersonalLifeOS.Application.csproj", "{A58F60AA-965E-438C-A7CE-7991E245FBA4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalLifeOS.Infrastructure", "src\PersonalLifeOS.Infrastructure\PersonalLifeOS.Infrastructure.csproj", "{75BE1F26-CB56-4B6F-831D-DC3E4F87B326}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalLifeOS.UnitTests", "tests\PersonalLifeOS.UnitTests\PersonalLifeOS.UnitTests.csproj", "{C297ED50-F059-4F28-A4A8-02AFBD9990B5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D7CDB51E-C40D-4339-A8DE-6D421654A85A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7CDB51E-C40D-4339-A8DE-6D421654A85A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7CDB51E-C40D-4339-A8DE-6D421654A85A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7CDB51E-C40D-4339-A8DE-6D421654A85A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59AB1D89-9B8F-4D22-A257-EEBDD3C31941}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59AB1D89-9B8F-4D22-A257-EEBDD3C31941}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59AB1D89-9B8F-4D22-A257-EEBDD3C31941}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59AB1D89-9B8F-4D22-A257-EEBDD3C31941}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3668CB0C-07D7-4559-960A-B21F35EA91CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3668CB0C-07D7-4559-960A-B21F35EA91CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3668CB0C-07D7-4559-960A-B21F35EA91CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3668CB0C-07D7-4559-960A-B21F35EA91CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A58F60AA-965E-438C-A7CE-7991E245FBA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A58F60AA-965E-438C-A7CE-7991E245FBA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A58F60AA-965E-438C-A7CE-7991E245FBA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A58F60AA-965E-438C-A7CE-7991E245FBA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75BE1F26-CB56-4B6F-831D-DC3E4F87B326}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75BE1F26-CB56-4B6F-831D-DC3E4F87B326}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75BE1F26-CB56-4B6F-831D-DC3E4F87B326}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75BE1F26-CB56-4B6F-831D-DC3E4F87B326}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C297ED50-F059-4F28-A4A8-02AFBD9990B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C297ED50-F059-4F28-A4A8-02AFBD9990B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C297ED50-F059-4F28-A4A8-02AFBD9990B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C297ED50-F059-4F28-A4A8-02AFBD9990B5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B134F486-3486-4E55-B292-389C4554E9CE}
+	EndGlobalSection
+EndGlobal

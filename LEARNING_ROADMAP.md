@@ -1,5 +1,7 @@
 # FinanceTracker Master Roadmap
 
+> **2026-07-11 update:** The product is now `PersonalLifeOS`, with Finance as its first bounded module. The active learning and delivery order is maintained in [P1_PRODUCT_PLAN.md](P1_PRODUCT_PLAN.md). P1-00 (Clean Architecture lite transition) is complete; P1-01 (Identity and user ownership) is next. The legacy roadmap below is retained as long-term learning context, not as the active implementation order.
+
 ## Vision
 
 Build a production-like Personal Finance Management System while mastering:
