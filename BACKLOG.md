@@ -1,73 +1,33 @@
-# Product Backlog
+# PersonalLifeOS Product Backlog
 
-## In Progress
+The ordered P1 backlog is maintained in [P1_PRODUCT_PLAN.md](P1_PRODUCT_PLAN.md). This file is the short operational queue.
 
-* ASP.NET Core MVC Client Project (Transactions Module Integration)
+## Completed — P1-00
 
----
+- [x] Rename solution/projects/namespaces: `FinanceTracker` → `PersonalLifeOS`.
+- [x] Map existing files/projects to Clean Architecture boundaries.
+- [x] Create Domain, Application, Infrastructure, Api, Web, and UnitTests projects.
+- [x] Move database secret from tracked configuration to .NET User Secrets.
+- [x] Verify solution build, unit test, EF migration discovery, and an API-to-database smoke request.
 
-## Todo
+## Now — P1-01
 
-### Phase 1
+- [ ] ASP.NET Core Identity and `ApplicationUser`.
+- [ ] Register, login, logout, password policy, lockout.
+- [ ] User ownership migration for Category and Transaction.
+- [ ] Protected APIs and user-scoped queries.
+- [ ] Theme/language user preferences.
 
-* Swagger Testing
-* Postman Testing
+## Later in P1
 
-### Phase 5
+- [ ] P1-02: accounts/wallets, income/expense/transfer, category templates, filters.
+- [ ] P1-03: unallocated money, funds/jars, goals, goal contributions.
+- [ ] P1-04: optional budgets, dashboard, reports, theme/i18n UI.
+- [ ] P1-05: on-demand deterministic financial review.
+- [ ] P1-06: tests, documentation, portfolio hand-off.
 
-* Repository Pattern
+## Explicitly deferred
 
-### Phase 6
-
-* JWT Authentication
-
-### Phase 7
-
-* Dashboard APIs
-
-### Phase 7A
-
-* Multi-Wallet System (Wallet Entity, DB Migration, Wallet APIs, and MvcClient Integration)
-
-### Phase 7B
-
-* JWT Authentication & Security (Login, Logout, Role Assignment, Token Storage)
-
-### Phase 8
-
-* JavaScript Client (Transactions Module JS Integration)
-
-### Phase 9
-
-* Saving Goal Module
-
-### Phase 10
-
-* Flutter Mobile App
-
-### Phase 11
-
-* WCF
-
-### Phase 12
-
-* gRPC
-
-### Phase 13
-
-* Microservices
-
----
-
-## Done
-
-* Requirement Analysis
-* Database Design
-* EF Core Setup
-* Initial Migration
-* Category CRUD (4 APIs)
-* Transaction CRUD (5 APIs)
-* XML Formatter & Content Negotiation
-* OData
-* DTO & Validation (AutoMapper)
-* Categories Module (MvcClient with JavaScript AJAX Client)
+- [ ] Email/SMS verification and password reset (P1.1).
+- [ ] Live prices, P&L, and Binance/OKX/DNSE connection (P2+).
+- [ ] Mobile, tasks, habits, calendar, AI chatbot, microservices, gRPC, Docker, CI/CD.

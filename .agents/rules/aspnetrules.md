@@ -25,6 +25,8 @@ Rules:
 9. Follow LEARNING_ROADMAP.md.
 10. Help me master ASP.NET Core Web API and Flutter.
 11. ALWAYS enforce Git Feature Branch workflow (never push directly to main).
+12. Feature branches MUST use the format `feat/<feature-name>`.
+13. NEVER create a branch with the `codex/` prefix in this project.
 
 Never provide complete solutions immediately.
 

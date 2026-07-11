@@ -1,5 +1,41 @@
 # Development Log
 
+## 2026-07-11
+
+### Product and architecture decisions
+
+* Product technical name will become `PersonalLifeOS`; Finance is its first bounded module.
+* P1 is a web-first finance MVP, not a full life-management system yet.
+* Use Clean Architecture lite and a modular monolith; avoid premature microservices, CQRS, MediatR, and generic repository abstractions.
+* Continue EF Core Code First with explicit reviewed migrations committed to source control.
+* Use ASP.NET Core Identity for basic registration/login/logout. Email/SMS verification and password reset are deferred to P1.1.
+* Browser holds only a secure HTTP-only session cookie. JWT must not be available to JavaScript or browser storage.
+* All personal finance data must be owned and filtered by `UserId`.
+* P1 investment support is manual VND value only; no live quote, P&L, private exchange/broker API, or trading action.
+* P1 review is user-triggered and rule-based first. AI cannot silently modify data.
+* Theme preference is System/Light/Dark; language preference is Auto/Vietnamese/English and persists per user.
+
+### Planning completed
+
+* Created `P1_PRODUCT_PLAN.md` as the P1 product, architecture, and delivery source of truth.
+* Replaced the legacy linear stage plan in `PROJECT_TRACKING.md` and `BACKLOG.md` with the ordered P1 backlog.
+
+### Next session
+
+* P1-01 only: design the Identity, user ownership, browser session, and data migration slice before implementation.
+
+### P1-00 completed
+
+* Renamed the solution and host projects to `PersonalLifeOS`.
+* Introduced Domain, Application, Infrastructure, Api, Web, and UnitTests project boundaries.
+* Reused and moved the existing Category/Transaction API and MVC code instead of rewriting it.
+* Preserved the original EF Core migration history inside Infrastructure.
+* Moved the local SQL Server connection string to .NET User Secrets and removed it from tracked configuration.
+* Added architecture/setup documentation and one test-project smoke test.
+* Verified: full solution build (`0 warnings, 0 errors`), unit test (`1 passed`), EF migration discovery, and API Category request (`HTTP 200`) through SQL Server.
+
+---
+
 ## 2026-06-09
 
 ### Decisions
