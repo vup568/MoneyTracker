@@ -1,53 +1,86 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using PersonalLifeOS.Domain.Finance;
+using PersonalLifeOS.Domain.Users;
+using PersonalLifeOS.Infrastructure.Identity;
 
-namespace PersonalLifeOS.Infrastructure.Persistence
+namespace PersonalLifeOS.Infrastructure.Persistence;
+
+public class FinanceDbContext : IdentityDbContext<ApplicationUser>
 {
-    public class FinanceDbContext : DbContext
+    public FinanceDbContext(DbContextOptions<FinanceDbContext> options)
+        : base(options)
     {
-        //khởi tạo đối tượng FinanceDbContext DB kế thừa từ class DbContext 
-        public FinanceDbContext(DbContextOptions<FinanceDbContext> options): base(options) { }
-        //trong program.cs khi khởi tạo Db thì, DI sẽ tạo ra và truyền một đối tượng có kiểu là FinanceDbContext tương ứng cho options ( chứa SQL server provider, connection string, cấu hình EF core )
+    }
 
-        //base(options) là chuyển cấu hình options cho DbContext cha xử lý 
+    public DbSet<Category> Categories { get; set; } = null!;
 
-        //EF Core hãy tạo bảng Categories
-        public DbSet<Category> Categories { get; set; }
+    public DbSet<Transaction> Transactions { get; set; } = null!;
 
-        public DbSet<Transaction> Transactions { get; set; }
+    public DbSet<UserPreference> UserPreferences { get; set; } = null!;
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-            //EF core có sẵn DbContext có hàm virtual OnModelCreating -> chúng ta sẽ gọi lại hàm đó của lớp cha nên phải thêm override 
-        {
-            base.OnModelCreating(modelBuilder);
-            // chạy cấu hình mặc định của EF core trước xong mới chạy tới cấu hình bên dưới của tôi 
-            //Thực ra có thể bỏ đi vẫn chạy được nhưng mà sau này còn có nhiều các cấu hình khác được Microsoft thêm trong DbContext cha. Chúng ta không muốn bỏ qua các cấu hình đó 
-            // Ví dụ như JWT, Identity 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        // Identity configures its tables and keys here before our custom mappings.
+        base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Category>()
-                .Property(c => c.CategoryName)
-                .HasMaxLength(100)
-                .IsRequired();
+        modelBuilder.Entity<Category>()
+            .Property(category => category.CategoryName)
+            .HasMaxLength(100)
+            .IsRequired();
 
-            modelBuilder.Entity<Category>()
-                .Property(c => c.Description)
-                .HasMaxLength(500);
+        modelBuilder.Entity<Category>()
+            .Property(category => category.Description)
+            .HasMaxLength(500);
 
-            modelBuilder.Entity<Transaction>()
-                .Property(t => t.Title)
-                .HasMaxLength(200)
-                .IsRequired();
+        modelBuilder.Entity<Transaction>()
+            .Property(transaction => transaction.Title)
+            .HasMaxLength(200)
+            .IsRequired();
 
-            modelBuilder.Entity<Transaction>()
-                .Property(t => t.Amount)
-                .HasColumnType("decimal(18,2)");
+        modelBuilder.Entity<Transaction>()
+            .Property(transaction => transaction.Amount)
+            .HasColumnType("decimal(18,2)");
 
-            modelBuilder.Entity<Transaction>()
-                .HasOne(t => t.Category)
-                .WithMany(t => t.Transactions)
-                .HasForeignKey(t => t.CategoryId);
+        modelBuilder.Entity<Transaction>()
+            .HasOne(transaction => transaction.Category)
+            .WithMany(category => category.Transactions)
+            .HasForeignKey(transaction => transaction.CategoryId);
 
-        }
+        ConfigureIdentityUser(modelBuilder);
+        ConfigureUserPreference(modelBuilder);
+    }
 
+    private static void ConfigureIdentityUser(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<ApplicationUser>()
+            .Property(user => user.DisplayName)
+            .HasMaxLength(100)
+            .IsRequired();
+    }
+
+    private static void ConfigureUserPreference(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<UserPreference>()
+            .Property(preference => preference.Currency)
+            .HasMaxLength(3)
+            .HasDefaultValue("VND")
+            .IsRequired();
+
+        modelBuilder.Entity<UserPreference>()
+            .Property(preference => preference.TimeZone)
+            .HasMaxLength(100)
+            .HasDefaultValue("Asia/Ho_Chi_Minh")
+            .IsRequired();
+
+        modelBuilder.Entity<UserPreference>()
+            .HasOne<ApplicationUser>()
+            .WithOne()
+            .HasForeignKey<UserPreference>(preference => preference.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<UserPreference>()
+            .HasIndex(preference => preference.UserId)
+            .IsUnique();
     }
 }
